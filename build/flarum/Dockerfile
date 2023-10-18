@@ -27,6 +27,9 @@ RUN export MC="-j$(nproc)" \
     && install-php-extensions ${PHP_EXTENSIONS} \
     && npm install -g ${NPM_INSTALL_GLOBAL_PACKS}
 
+# 安装 Adminer 管理器
+COPY --from=adminer /var/www/html/adminer.php /var/www/html/
+
 # 启动脚本
 COPY ./entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
