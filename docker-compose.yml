@@ -1,0 +1,54 @@
+version: "3"
+
+networks:
+  default:
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${PROJECT_DIR}:/www:rw
+      - ${NGINX_LOG_DIR}:/var/log/nginx:rw
+      - ${NGINX_LIB_DIR}:/etc/nginx/lib:ro
+      - ${NGINX_VHOST_DIR}:/etc/nginx/conf.d:ro
+    restart: always
+    networks:
+      - default
+    environment:
+      TZ: "${TZ}"
+
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    volumes:
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql:rw
+      - ${MYSQL_LOG_DIR}:/var/log/mysql:rw
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      TZ: "${TZ}"
+    networks:
+      - default
+
+  app:
+    build:
+      context: ./build/flarum/
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+        PHP_EXTENSIONS: ${PHP_EXTENSIONS}
+        ALPINE_REPOSITORIES: ${ALPINE_REPOSITORIES}
+        APK_ADD_PACKS: ${APK_ADD_PACKS}
+        NPM_INSTALL_GLOBAL_PACKS: ${NPM_INSTALL_GLOBAL_PACKS}
+        TZ: "${TZ}"
+    volumes:
+      - ${PROJECT_DIR}:/www:rw
+      - ${PHP_LOG_DIR}:/var/log/php
+      - ${COMPOSER_CACHE_DIR}:/usr/local/composer
+      - ${COMPOSER_CONFIG_FILE}:/usr/local/composer/config.json
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
