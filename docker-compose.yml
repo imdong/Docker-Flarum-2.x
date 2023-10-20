@@ -25,6 +25,7 @@ services:
     volumes:
       - ${MYSQL_DATA_DIR}:/var/lib/mysql:rw
       - ${MYSQL_LOG_DIR}:/var/log/mysql:rw
+      - ${MYSQL_INITDB_DIR}:/docker-entrypoint-initdb.d:r
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
@@ -48,6 +49,8 @@ services:
       - ${COMPOSER_CACHE_DIR}:/usr/local/composer
       - ${COMPOSER_CONFIG_FILE}:/usr/local/composer/config.json
     restart: always
+    environment:
+      FLARUM_VERSION: "${FLARUM_VERSION}"
     cap_add:
       - SYS_PTRACE
     networks:
