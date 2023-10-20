@@ -25,10 +25,11 @@ ARG PHP_EXTENSIONS
 ARG NPM_INSTALL_GLOBAL_PACKS
 RUN export MC="-j$(nproc)" \
     && install-php-extensions ${PHP_EXTENSIONS} \
-    && npm install -g ${NPM_INSTALL_GLOBAL_PACKS}
+    && npm install -g ${NPM_INSTALL_GLOBAL_PACKS} \
+    && mkdir -p /var/www/html/adminer
 
 # 安装 Adminer 管理器
-COPY --from=adminer /var/www/html/adminer.php /var/www/html/
+COPY --from=adminer /var/www/html/ /var/www/html/adminer
 
 # 启动脚本
 COPY ./entrypoint.sh /entrypoint.sh

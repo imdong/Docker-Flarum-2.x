@@ -15,9 +15,14 @@ Falrum 会安装到同级 `./www` 目录下，插件开发目录在 `./www/packa
 
 构建 js 只需要  `docker compose exec --workdir /www/packages/flarum-ext-hello-world/js app npm run dev`，注意，请将 `flarum-ext-hello-world` 改成你插件的目录名
 
-## 安装 Flarum
+启动成功后，访问 [http://flarum.localhost](http://flarum.localhost)` 即可进入论坛首页，
 
-默认提供数据库管理地址为 `http://127.0.0.1/adminer.php`
+默认管理员账号: `admin`
+默认管理员密码: `password`
+
+## 数据库管理
+
+默认提供数据库管理地址为 [http://flarum.localhost/adminer.php](http://flarum.localhost/adminer.php)
 
 数据库地址请填写 `mysql`
 
