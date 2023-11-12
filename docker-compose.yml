@@ -46,7 +46,8 @@ services:
     volumes:
       - ${PROJECT_DIR}:/www:rw
       - ${PHP_LOG_DIR}:/var/log/php
-      - ${COMPOSER_CACHE_DIR}:/usr/local/composer
+      - ${PHP_INI_FILE}:/usr/local/etc/php/php.ini
+      - ${COMPOSER_CACHE_DIR}:/usr/local/composer/cache
       - ${COMPOSER_CONFIG_FILE}:/usr/local/composer/config.json
     restart: always
     environment:

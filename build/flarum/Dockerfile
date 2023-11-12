@@ -32,7 +32,7 @@ RUN export MC="-j$(nproc)" \
 COPY --from=adminer /var/www/html/ /var/www/html/adminer
 
 # 启动脚本
-COPY ./*.sh /
+COPY ./entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 # 运行目录

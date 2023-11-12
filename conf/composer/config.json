@@ -1,5 +1,7 @@
 {
-    "config": {},
+    "config": {
+        "cache-dir": "/usr/local/composer/cache"
+    },
     "repositories": {
         "packagist": {
             "type": "composer",
